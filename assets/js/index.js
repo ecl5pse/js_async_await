@@ -48,7 +48,6 @@ promise
     .catch(console.error);
 */
 
-
 /*
 const promise1 = Promise.resolve(55);
 
@@ -116,9 +115,45 @@ async function test() {
 }*/
 
 
+/*
 fetch('../items.json')
     .then(response => {
         return response.json()
     })
     .then(console.log)
     .catch(console.error);
+*/
+
+
+const [loadTasksButton , postTaskButton] = document.getElementsByTagName('button')
+
+const state = {
+    isFetching:false,
+    tasks:[],
+    error:null,
+};
+
+async function loadAllTasks(){
+
+    try {
+        const  response = await fetch('http://192.168.0.106:3000/tasks');
+        state.tasks = await response.json();
+        refreshTasksList(state.tasks);
+
+    } catch (e) {
+        state.error = e;
+    }
+
+};
+
+function refreshTasksList(tasks) {
+
+    const  tasksLIst = document.getElementById('taskList');
+    tasksLIstst.innerHTML="";
+    tasks.forEach( task => {
+        const  taskistItm = document.createElement("li ");
+        taskistItm.append(task.value);
+        tasksLIst.append(taskistItm);
+    })
+
+}
